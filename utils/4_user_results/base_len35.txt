@@ -1,0 +1,23 @@
+Precision: 0.7577, Recall: 0.7482, F1 Score: 0.7529
+Precision: 0.7912, Recall: 0.4838, F1 Score: 0.6004
+Precision: 0.7899, Recall: 0.7020, F1 Score: 0.7433
+Precision: 0.7857, Recall: 0.5540, F1 Score: 0.6498
+Precision: 0.8179, Recall: 0.5242, F1 Score: 0.6389
+
+Precision: 0.8051, Recall: 0.7407, F1 Score: 0.7716
+Precision: 0.7695, Recall: 0.4620, F1 Score: 0.5773
+Precision: 0.8378, Recall: 0.7349, F1 Score: 0.7830
+Precision: 0.7908, Recall: 0.8402, F1 Score: 0.8147
+Precision: 0.6571, Recall: 0.3988, F1 Score: 0.4964
+
+Precision: 0.9878, Recall: 0.9930, F1 Score: 0.9904
+Precision: 0.9851, Recall: 0.9250, F1 Score: 0.9541
+Precision: 0.9610, Recall: 0.9913, F1 Score: 0.9759
+Precision: 0.9790, Recall: 0.8133, F1 Score: 0.8885
+Precision: 0.9954, Recall: 0.3787, F1 Score: 0.5487
+
+Precision: 0.8361, Recall: 0.6412, F1 Score: 0.7258
+Precision: 0.8631, Recall: 0.4936, F1 Score: 0.6280
+Precision: 0.8341, Recall: 0.6958, F1 Score: 0.7587
+Precision: 0.7945, Recall: 0.6903, F1 Score: 0.7388
+Precision: 0.8010, Recall: 0.5719, F1 Score: 0.6674

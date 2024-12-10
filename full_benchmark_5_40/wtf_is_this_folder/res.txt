@@ -1,0 +1,48 @@
+Model 21 - true_positive_rate: 0.9851, false_positive_rate: 0.1617
+Precision: 0.2598, Recall: 0.9851
+Accuracy: 0.8463
+Model 22 - true_positive_rate: 1.0000, false_positive_rate: 0.0341
+Precision: 0.7516, Recall: 1.0000
+Accuracy: 0.9691
+Model 23 - true_positive_rate: 0.0000, false_positive_rate: 0.0000
+Precision: 0.0000, Recall: 0.0000
+Accuracy: 0.9407
+Model 24 - true_positive_rate: 0.5641, false_positive_rate: 0.2435
+Precision: 0.1958, Recall: 0.5641
+Accuracy: 0.7382
+Model 25 - true_positive_rate: 0.9851, false_positive_rate: 0.0189
+Precision: 0.7500, Recall: 0.9851
+Accuracy: 0.9813
+Model 26 - true_positive_rate: 0.9841, false_positive_rate: 0.1345
+Precision: 0.2831, Recall: 0.9841
+Accuracy: 0.8715
+Model 40 - true_positive_rate: 0.0164, false_positive_rate: 0.0163
+Precision: 0.0500, Recall: 0.0164
+Accuracy: 0.9358
+Model 41 - true_positive_rate: 0.4516, false_positive_rate: 0.0522
+Precision: 0.3146, Recall: 0.4516
+Accuracy: 0.9228
+Model 42 - true_positive_rate: 0.8939, false_positive_rate: 0.5541
+Precision: 0.0838, Recall: 0.8939
+Accuracy: 0.4699
+Model 60 - true_positive_rate: 0.3840, false_positive_rate: 0.0534
+Precision: 0.4486, Recall: 0.3840
+Accuracy: 0.8894
+Model 61 - true_positive_rate: 0.7922, false_positive_rate: 0.1587
+Precision: 0.2500, Recall: 0.7922
+Accuracy: 0.8382
+Model 62 - true_positive_rate: 0.7500, false_positive_rate: 0.0045
+Precision: 0.9490, Recall: 0.7500
+Accuracy: 0.9707
+Model 81 - true_positive_rate: 0.7252, false_positive_rate: 0.1183
+Precision: 0.4222, Recall: 0.7252
+Accuracy: 0.8650
+Model 82 - true_positive_rate: 0.9878, false_positive_rate: 0.0592
+Precision: 0.5436, Recall: 0.9878
+Accuracy: 0.9439
+
+Average true_positive_rate: 0.6800
+Average false_positive_rate: 0.1150
+Average Precision: 0.3787
+Average Recall: 0.6800
+Average Accuracy: 0.8702

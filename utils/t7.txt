@@ -1,0 +1,97 @@
+*** DATA LOADER INFO ***
+Positives: 1647
+Negatives: 2938 [226, 226, 226, 226, 226, 226, 226, 226, 226, 226, 226, 226, 226]************************
+
+train_examples 2529
+test_examples 654
+Train dataset statistics:  1: 1268 | 0: 1261 | Total: 2529
+Test dataset statistics:   1: 329 | 0: 325 | Total: 654
+Epoch: 050, Loss: 0.6903
+Epoch: 100, Loss: 0.6931
+Epoch: 150, Loss: 0.6932
+Epoch: 200, Loss: 0.6934
+Epoch: 250, Loss: 0.6931
+Epoch: 300, Loss: 0.6933
+Epoch: 350, Loss: 0.6932
+Epoch: 400, Loss: 0.6932
+Epoch: 450, Loss: 0.6932
+Epoch: 500, Loss: 0.6934
+Epoch: 550, Loss: 0.6932
+Epoch: 600, Loss: 0.6932
+Epoch: 650, Loss: 0.6933
+Epoch: 699, Loss: 0.6932
+Prec 0.0000, recall 0.0000
+train_examples 2336
+test_examples 654
+Train dataset statistics:  1: 1218 | 0: 1118 | Total: 2336
+Test dataset statistics:   1: 329 | 0: 325 | Total: 654
+Epoch: 050, Loss: 0.6909
+Epoch: 100, Loss: 0.6908
+Epoch: 150, Loss: 0.6904
+Epoch: 200, Loss: 0.6903
+Epoch: 250, Loss: 0.6897
+Epoch: 300, Loss: 0.6906
+Epoch: 350, Loss: 0.6990
+Epoch: 400, Loss: 0.6911
+Epoch: 450, Loss: 0.6804
+Epoch: 500, Loss: 0.6664
+Epoch: 550, Loss: 0.6574
+Epoch: 600, Loss: 0.6237
+Epoch: 650, Loss: 0.4284
+Epoch: 699, Loss: 0.1865
+Prec 0.8811, recall 0.6535
+train_examples 2270
+test_examples 655
+Train dataset statistics:  1: 1217 | 0: 1053 | Total: 2270
+Test dataset statistics:   1: 330 | 0: 325 | Total: 655
+Epoch: 050, Loss: 0.6897
+Epoch: 100, Loss: 0.6903
+Epoch: 150, Loss: 0.6902
+Epoch: 200, Loss: 0.6903
+Epoch: 250, Loss: 0.6902
+Epoch: 300, Loss: 0.6902
+Epoch: 350, Loss: 0.6902
+Epoch: 400, Loss: 0.6902
+Epoch: 450, Loss: 0.6902
+Epoch: 500, Loss: 0.6902
+Epoch: 550, Loss: 0.6902
+Epoch: 600, Loss: 0.6902
+Epoch: 650, Loss: 0.6902
+Epoch: 699, Loss: 0.6902
+Prec 0.5038, recall 1.0000
+train_examples 2323
+test_examples 654
+Train dataset statistics:  1: 1218 | 0: 1105 | Total: 2323
+Test dataset statistics:   1: 329 | 0: 325 | Total: 654
+Epoch: 050, Loss: 0.6423
+Epoch: 100, Loss: 0.5985
+Epoch: 150, Loss: 0.5802
+Epoch: 200, Loss: 0.4615
+Epoch: 250, Loss: 0.2272
+Epoch: 300, Loss: 0.0950
+Epoch: 350, Loss: 0.1062
+Epoch: 400, Loss: 0.0184
+Epoch: 450, Loss: 0.0673
+Epoch: 500, Loss: 0.0012
+Epoch: 550, Loss: 0.0726
+Epoch: 600, Loss: 0.0015
+Epoch: 633, Loss: 0.0005
+Prec 0.9071, recall 0.5046
+train_examples 2528
+test_examples 655
+Train dataset statistics:  1: 1267 | 0: 1261 | Total: 2528
+Test dataset statistics:   1: 330 | 0: 325 | Total: 655
+Epoch: 050, Loss: 0.6598
+Epoch: 100, Loss: 0.6110
+Epoch: 150, Loss: 0.5723
+Epoch: 200, Loss: 0.3325
+Epoch: 250, Loss: 0.1336
+Epoch: 300, Loss: 0.0541
+Epoch: 350, Loss: 0.0522
+Epoch: 400, Loss: 0.0913
+Epoch: 450, Loss: 0.0660
+Epoch: 500, Loss: 0.0098
+Epoch: 550, Loss: 0.0456
+Epoch: 600, Loss: 0.0038
+Epoch: 630, Loss: 0.0004
+Prec 0.9297, recall 0.3606

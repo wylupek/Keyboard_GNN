@@ -1,0 +1,30 @@
+rows 40
+user1
+TP: 1488, FP: 333, TN: 2442, FN: 1289
+Precision: 0.82, Recall: 0.54
+
+user2
+TP: 1572, FP: 449, TN: 2110, FN: 989
+Precision: 0.78, Recall: 0.61
+
+user3
+TP: 2699, FP: 79, TN: 2777, FN: 159
+Precision: 0.97, Recall: 0.94
+
+user4
+TP: 1863, FP: 422, TN: 2317, FN: 877
+Precision: 0.82, Recall: 0.68
+
+
+base len 50, 1 ff layer, 128 hidden params, standard features
+User1 Precision: 0.85, Recall: 0.51
+User2 Precision: 0.78, Recall: 0.62
+User3 Precision: 0.98, Recall: 0.93
+User4 Precision: 0.84, Recall: 0.69
+
+1 ff layer before, 2 after, 256, standard features
+User1 Precision: 0.8476, Recall: 0.5811
+User2 Precision: 0.9381, Recall: 0.8193
+User3 Precision: 0.9875, Recall: 0.9008
+User4 Precision: 0.8842, Recall: 0.7531
+Precision: 0.91, Recall: 0.76

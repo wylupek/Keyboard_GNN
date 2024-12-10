@@ -1,0 +1,4 @@
+mode,epochs_num,rows_per_example,hidden_dim,user_id,num_layers,use_fc_before,use_fc_before,fc_after_conv,hidden_dim,num_conv_layers,node_features,precision,recall
+LoadMode.ONE_HOT,500,50,64,62,2,False,1,2,64,2,116,0.8569014101684379,0.7383423749246535
+LoadMode.ONE_HOT,500,50,128,62,2,False,1,2,128,2,116,0.755000823099119,0.6895117540687161
+LoadMode.ONE_HOT,500,50,256,62,2,False,1,2,256,2,116,0.8074900080321898,0.8789170182841071

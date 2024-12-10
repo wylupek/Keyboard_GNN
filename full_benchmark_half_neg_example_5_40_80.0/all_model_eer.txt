@@ -1,0 +1,2 @@
+EER Threshold: 0.20
+EER: 0.1565
