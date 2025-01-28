@@ -4,12 +4,13 @@ import torch
 try:
     from utils.data_loader import LoadMode, load_from_str
     from utils.train import SimpleGraphDataset, LetterGNN
+    from utils.current_setup import kwargs as current_kwargs
+
 except:
     from data_loader import LoadMode, load_from_str
     from train import SimpleGraphDataset, LetterGNN
+    from current_setup import kwargs as current_kwargs
 
-
-from current_setup import kwargs as current_kwargs
 
 def inference(user_id: int, content: str, model_path='', threshold=0.7) -> tuple[float, int]:
     """
@@ -24,7 +25,7 @@ def inference(user_id: int, content: str, model_path='', threshold=0.7) -> tuple
     """
     device = str(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
-    inference_dataset = load_from_str(content, y=torch.tensor([1]),
+    inference_dataset = load_from_str(content, y=1,
                                       mode=current_kwargs["mode"], rows_per_example=current_kwargs["rows_per_example"], offset=10)
     inference_dataset = [e.to(device) for e in inference_dataset]
     inference_dataset = SimpleGraphDataset(inference_dataset)
@@ -45,8 +46,8 @@ def inference(user_id: int, content: str, model_path='', threshold=0.7) -> tuple
         for data in inference_loader:
             data = data.to(device)
             output = loaded_model(data.x, data.edge_index, data.batch)
-            prob = torch.sigmoid(output)  # Convert logits to probabilities
-            pred = (prob > current_kwargs["threshold"]).float()  # Threshold at 0.5 to get binary predictions
+            prob = torch.sigmoid(output)
+            pred = (prob > current_kwargs["threshold"]).float()  
             
             total_positives += pred
     accuracy = float(total_positives / len(inference_dataset))
@@ -60,8 +61,8 @@ if __name__ == '__main__':
     import sys 
     user = int(sys.argv[1])
     
-    model_path = f"../models/models_5_len35/{user}.pth"
+    model_path = f"../models/zzz_baseline/{user}.pth"
     test_file_path = f"../datasets/inference/key_presses_{user}.-1.tsv"
     with open(test_file_path, "r", encoding="utf-8") as file:
         tsv_content = file.read()
-    print(inference(user, tsv_content, model_path=f"../models/models_5_len35/{user}.pth", threshold=0.5))
+    print(inference(user, tsv_content, model_path=model_path, threshold=0.5))

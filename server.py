@@ -4,6 +4,9 @@ from utils import database_utils
 from utils.inference import inference as inference_fun
 from utils.train import train as train_fun, LoadMode
 
+from utils.current_setup import kwargs as current_setup_kwargs
+from copy import deepcopy
+
 app = FastAPI()
 
 @app.get("/")
@@ -27,14 +30,16 @@ async def upload_tsv(request: Request, username: str):
 async def train(request: Request, username: str):
     tsv_data = await request.body()
     tsv_str = tsv_data.decode('utf-8')
+    username_id = int(username)
 
-    if not database_utils.load_str(tsv_str, username, skip_header=True):
+    if not database_utils.load_str(tsv_str, username_id, skip_header=True):
         return {"message": "Error: Couldn't load the data"}
-    database_utils.save_tsv(content=tsv_str, base_path="./datasets/training/", username=username)
+    database_utils.save_tsv(content=tsv_str, base_path="./datasets/training/", username=username_id)
 
-    train_fun('keystroke_data.sqlite', username, mode=LoadMode.ONE_HOT,
-              test_train_split=0, positive_negative_ratio=1, hidden_dim=128,
-              rows_per_example=50, offset=10)
+    kwargs = deepcopy(current_setup_kwargs)
+    kwargs.pop("threshold", None)  # remove the threshold
+    train_fun('keystroke_data.sqlite', username_id, test_train_split=0, positive_negative_ratio=2, offset=10,
+             **kwargs)
 
     return {"message": "TSV data received successfully. Training succeeded."}
 

@@ -167,7 +167,6 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
     # Training over epochs
     best_model = None
     smallest_loss = 10000000
-    prev_big_loss = 0
     data_loader = torchLoader.DataLoader(train_examples, batch_size=32, shuffle=True)
     for epoch in range(1, epochs_num):
         model.train()
@@ -181,7 +180,10 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
             target = data.y.float().unsqueeze(1)  # Add an extra dimension
             loss = criterion(output, target)  # Compute the loss
 
-            loss = criterion(output, target)  # Compute the loss
+            if loss < smallest_loss:
+                smallest_loss = loss
+                best_model = model.state_dict()
+
             loss.backward()  # Backpropagation
             optimizer.step()  # Update the model parameters
             total_loss += loss.item()
@@ -193,7 +195,7 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
             print(f"Epoch: {epoch:03d}, Loss: {loss:.4f}")
             break
 
-    torch.save(model.state_dict(), model_path)
+    torch.save(best_model.state_dict(), model_path)
 
     if len(test_examples):
         test_loader = torchLoader.DataLoader(test_examples, batch_size=1, shuffle=False)
