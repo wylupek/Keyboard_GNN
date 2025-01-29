@@ -93,12 +93,15 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
     :param model_path: Path to save the model. Leave default to save at ./model/<user_id>.pth
     :param mode: Mode for processing node attributes
     :param test_train_split: test to all examples proportion, set 0 for training only
-    :param hidden_dim: hidden dimension
+    :param hidden_conv_dim: hidden dimension of convolutional layers
+    :param hidden_ff_dim: hidden dimension of fully connected layers
     :param epochs_num: number of epochs for training loop
     :param rows_per_example: number of key presses per example
     :param positive_negative_ratio: positive to negative class ratio, set 0 to load all examples,
         but take care of class imbalance.
     :param offset: Number of rows between beginning of each example
+    :param num_layers: Number of layers in the model
+    :param use_fc_before: Whether to apply a fully connected layer before the first graph convolutional layer.
     :return: accuracy of the model
     """
     if model_path == '':
@@ -164,7 +167,6 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
     criterion = torch.nn.BCEWithLogitsLoss()
 
     # Training over epochs
-    # Training over epochs
     best_model = None
     smallest_loss = 10000000
     data_loader = torchLoader.DataLoader(train_examples, batch_size=32, shuffle=True)
@@ -195,7 +197,7 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
             print(f"Epoch: {epoch:03d}, Loss: {loss:.4f}")
             break
 
-    torch.save(best_model.state_dict(), model_path)
+    torch.save(best_model, model_path)
 
     if len(test_examples):
         test_loader = torchLoader.DataLoader(test_examples, batch_size=1, shuffle=False)
@@ -221,24 +223,30 @@ def train(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT
     return 0.0
 
 
-def train_with_crossvalidation(database_path: str, user_id: int, model_path='', mode=LoadMode.ONE_HOT,
+def train_with_crossvalidation(database_path: str, user_id: str, model_path='', mode=LoadMode.ONE_HOT,
           test_train_split=0.2, hidden_conv_dim=64, hidden_ff_dim=256, epochs_num=1000,
-          rows_per_example=50, positive_negative_ratio=0.5, offset=1, num_layers=2, use_fc_before=True, max_dur=1_000_000) -> list[tuple[float, float, float]]:
+          rows_per_example=50, positive_negative_ratio=0.5, offset=1, num_layers=2, use_fc_before=True, max_dur=1_000_000) -> tuple:
     """
-    Train the model and test it's performance using cross validation 
+    Train the model and test its performance using cross validation
     :param database_path: Path to database with key presses
     :param user_id: user_id for positive labels
     :param model_path: Path to save the model. Leave default to save at ./model/<user_id>.pth
     :param mode: Mode for processing node attributes
     :param test_train_split: test to all examples proportion, set 0 for training only
-    :param hidden_dim: hidden dimension
+    :param hidden_conv_dim: hidden dimension of convolutional layers
+    :param hidden_ff_dim: hidden dimension of fully connected layers
     :param epochs_num: number of epochs for training loop
     :param rows_per_example: number of key presses per example
     :param positive_negative_ratio: positive to negative class ratio, set 0 to load all examples,
         but take care of class imbalance.
     :param offset: Number of rows between beginning of each example
-        for each of the cross validation f 
-    :returns list of tuple of (precision, recall, f1 score)
+        for each of the cross validation f
+    :param num_layers: Number of layers in the model
+    :param use_fc_before: Whether to apply a fully connected layer before the first graph convolutional layer.
+    :param max_dur: Maximum keystroke duration
+    :return:
+        - List of tuples containing (precision, recall, f1-score) for each cross-validation fold.
+        - Model summary (format depends on `df_summary()` output).
     """
     results = []
     models = []
@@ -383,7 +391,7 @@ def train_with_crossvalidation(database_path: str, user_id: int, model_path='', 
             results.append((precision, recall, f1))
 
     # get index of result with highest f1 score, and save corresponding model
-    # i have no idea if this will ever be useful but since we have the models we might as well save one 
+    # I have no idea if this will ever be useful but since we have the models we might as well save one
     i = results.index(max(results, key=lambda x: x[2]))
     torch.save(models[i], model_path)
 
@@ -393,22 +401,26 @@ def train_with_crossvalidation(database_path: str, user_id: int, model_path='', 
 
 def single_model_with_crossvalidation(database_path: str, model_path='', mode=LoadMode.ONE_HOT,
           test_train_split=0.2, hidden_conv_dim=64, hidden_ff_dim=256, epochs_num=1000,
-          rows_per_example=50, offset=1, num_layers=2, use_fc_before=True, max_dur=1_000_000) -> list[tuple[float, float, float]]:
+          rows_per_example=50, offset=1, num_layers=2, use_fc_before=True, max_dur=1_000_000) -> tuple:
     """
-    Train the model and test it's performance using cross validation 
+    Train the model and test its performance using cross validation
     :param database_path: Path to database with key presses
-    :param user_id: user_id for positive labels
     :param model_path: Path to save the model. Leave default to save at ./model/<user_id>.pth
     :param mode: Mode for processing node attributes
     :param test_train_split: test to all examples proportion, set 0 for training only
-    :param hidden_dim: hidden dimension
+        :param hidden_conv_dim: hidden dimension of convolutional layers
+    :param hidden_ff_dim: hidden dimension of fully connected layers
     :param epochs_num: number of epochs for training loop
     :param rows_per_example: number of key presses per example
-    :param positive_negative_ratio: positive to negative class ratio, set 0 to load all examples,
         but take care of class imbalance.
     :param offset: Number of rows between beginning of each example
-        for each of the cross validation f 
-    :returns list of tuple of (precision, recall, f1 score)
+        for each of the cross validation f
+    :param num_layers: Number of layers in the model
+    :param use_fc_before: Whether to apply a fully connected layer before the first graph convolutional layer.
+    :param max_dur: Maximum keystroke duration
+    :return:
+        - List of tuples containing (precision, recall, f1-score) for each cross-validation fold.
+        - Model summary (format depends on `df_summary()` output).
     """
     results = []
     models = []
@@ -582,4 +594,3 @@ if __name__ == '__main__':
         print(f"----- training {user} -----")
         train("../keystroke_data.sqlite", model_path=f"../models/model_5_40_half_neg_no_cv/{user}.pth", test_train_split=0, positive_negative_ratio=2, offset=10,
                 **kwargs2)
-    

@@ -12,7 +12,7 @@ except:
     from current_setup import kwargs as current_kwargs
 
 
-def inference(user_id: int, content: str, model_path='', threshold=0.7) -> tuple[float, int]:
+def inference(user_id: str, content: str, model_path='', threshold=0.7) -> tuple[float, int]:
     """
     Train and save the model
     :param user_id: user_id for positive labels
@@ -59,7 +59,7 @@ def inference(user_id: int, content: str, model_path='', threshold=0.7) -> tuple
 
 if __name__ == '__main__':
     import sys 
-    user = int(sys.argv[1])
+    user = sys.argv[1]
     
     model_path = f"../models/zzz_baseline/{user}.pth"
     test_file_path = f"../datasets/inference/key_presses_{user}.-1.tsv"

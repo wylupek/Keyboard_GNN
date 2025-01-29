@@ -9,9 +9,7 @@ except:
 
 import sqlite3
 import pandas as pd
-import numpy as np
 import csv
-from enum import Enum
 from typing import Tuple, List
 from io import StringIO
 from enum import IntEnum
@@ -32,6 +30,7 @@ class LoadMode(IntEnum):
     SMALL_ALPHABET = 4
     ACCENT_AND_CAPITAL_FLAG = 5
 
+
 def getAlphabetSize(mode):
     if mode == LoadMode.SMALL_ALPHABET:
         return letter_encoding.small_alphabet_size
@@ -39,6 +38,7 @@ def getAlphabetSize(mode):
         return letter_encoding.thirdAlphabetSize
     else:
         return letter_encoding.AlphabetSize
+
 
 def create_data_obj(df: pd.DataFrame, edges: list, y: torch.tensor, mode=LoadMode.ONE_HOT, use_accel=False) -> Data:
     """
@@ -100,6 +100,7 @@ def create_data_obj_extra_feature(df: pd.DataFrame, edges: list, y: torch.tensor
     :param edges: List[List[int], List[int]]:
         - The first list contains indices of starting keys (edge beginnings).
         - The second list contains indices of ending keys (edge endings).
+    :param mat: A matrix representing features.
     :param y: data label
     :param mode: Mode for processing node attributes
     :param use_accel: whether to use accelerometer data
@@ -177,6 +178,8 @@ def process_df(df: pd.DataFrame, char_to_value_map, max_dur = 1_000_000) -> Tupl
         | key - Key identifying each event.
         | duration - Duration values for each event.
         | accel_x, accel_y, accel_z - Accelerometer data.
+
+    :param max_dur: Maximum keystroke duration
     :return: Tuple:
         - pd.DataFrame:
             | key: Encoded key values.
@@ -241,7 +244,8 @@ def process_df(df: pd.DataFrame, char_to_value_map, max_dur = 1_000_000) -> Tupl
 
 
 
-def process_df_with_per_letter_average(df: pd.DataFrame, alphabet_size_feature, alphabet_size_node, char_to_enum_value_feature, char_to_enum_value_node) -> Tuple[pd.DataFrame, List[List[int]]]:
+def process_df_with_per_letter_average(df: pd.DataFrame, alphabet_size_feature, alphabet_size_node,
+                                       char_to_enum_value_feature, char_to_enum_value_node) -> Tuple[pd.DataFrame, List[List[int]], torch.Tensor]:
     """
     Processes a DataFrame to compute average durations before and after key events 
     for each letter separately, filling with zero otherwise,
@@ -426,7 +430,7 @@ def load_from_str(content: str, y: int, mode=LoadMode.ONE_HOT, rows_per_example=
         return [create_data_obj_extra_feature(df, edges, y=torch.tensor(y), mode=mode, mat=extra_feature_matrix) for df, edges in zip(df_list, edges_list)]
 
 
-def get_user_examples(conn: sqlite3.Connection, user_id: int, y: torch.tensor, 
+def get_user_examples(conn: sqlite3.Connection, user_id: str, y: torch.tensor,
                       mode=LoadMode.ONE_HOT, rows_per_example=50, offset=10, agg_time=True, max_dur=1_000_000) -> List[Data]:
     """
     Loads and processes data from a database to generate a list of PyTorch Geometric `Data` objects.
@@ -488,7 +492,7 @@ def get_user_examples(conn: sqlite3.Connection, user_id: int, y: torch.tensor,
         return [create_data_obj_extra_feature(df, edges, y=torch.tensor(y), mode=mode, mat=extra_feature_matrix) for df, edges in zip(df_list, edges_list)]
 
 
-def load_from_db(database_path: str, user_id: int, positive_negative_ratio: float,
+def load_from_db(database_path: str, user_id: str, positive_negative_ratio: float,
                  mode=LoadMode.ONE_HOT, rows_per_example=50, offset=10, max_dur=1_000_000, agg_time=True, add_extra_examples_for_crossval=False) -> Tuple[List[Data], List[List[Data]]]:
     """
     Loads and processes data from a database to generate a list of PyTorch Geometric `Data` objects.
@@ -556,7 +560,7 @@ def load_from_db(database_path: str, user_id: int, positive_negative_ratio: floa
     return positive_examples, negative_examples
 
 
-def load_from_db_all(database_path: str, mode=LoadMode.ONE_HOT, rows_per_example=50, offset=10, max_dur=1_000_000) -> Tuple[List[Data], List[Data]]:
+def load_from_db_all(database_path: str, mode=LoadMode.ONE_HOT, rows_per_example=50, offset=10, max_dur=1_000_000) -> tuple:
     """
     Loads and processes data from a database to generate a list of PyTorch Geometric `Data` objects.
     :param database_path: Path to database

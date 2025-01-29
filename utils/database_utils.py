@@ -13,12 +13,12 @@ def print_tsv(content: list[dict]) -> None:
 
 
 def save_tsv(content: str, base_path:str, username: str):
-    base_filename = username + '.tsv'
+    base_filename = username + '.1.tsv'
     file_path = os.path.join(base_path, base_filename)
 
     # Check if the file already exists
     if os.path.exists(file_path):
-        counter = 1
+        counter = 2
         while os.path.exists(os.path.join(base_path, f"{username}.{counter}.tsv")):
             counter += 1
         file_path = os.path.join(base_path, f"{username}.{counter}.tsv")
@@ -97,7 +97,7 @@ def create_table() -> bool:
         return False
 
 
-def add_tsv_values(content: list[dict], user_id: int) -> bool:
+def add_tsv_values(content: list[dict], user_id: str) -> bool:
     """
     Insert records into the key_press table in the keystroke_data.sqlite database.
     :param content: A list of dictionaries containing key press data, where each
@@ -154,7 +154,6 @@ def load_file(file_name: str) -> bool:
         base_name = os.path.basename(file_name)
         # get rid of the "key_presses_" part
         user_id = os.path.splitext(base_name)[0].split('.')[0].removeprefix("key_presses_")
-        user_id = int(user_id)
 
         with open(file_name, 'r', newline='', encoding='utf-8') as file:
             reader = csv.reader(file, delimiter='\t', quotechar=None)
