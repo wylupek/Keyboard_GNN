@@ -46,7 +46,7 @@ def main():
     model_path_prefix = "models/no_acc_and_cap/"
     device = str(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
-    database_path = "keystroke_data.sqlite"
+    database_path = "../keystroke_data.sqlite"
     user_ids = get_user_ids(database_path)
 
     print(f"Found {len(user_ids)} user IDs in the database.")

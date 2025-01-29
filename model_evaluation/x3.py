@@ -3,7 +3,7 @@ from math import ceil
 from collections import Counter
 
 # Connect to the SQLite database file
-db_file = "keystroke_data.sqlite"
+db_file = "../keystroke_data.sqlite"
 connection = sqlite3.connect(db_file)
 
 user_id = int(sys.argv[1])
