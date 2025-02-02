@@ -2,7 +2,10 @@ from fastapi import FastAPI, Request
 import uvicorn
 from utils import database_utils
 from utils.inference import inference as inference_fun
-from utils.train import train as train_fun, LoadMode
+from utils.train import train as train_fun
+
+from utils.current_setup import kwargs as current_setup_kwargs
+from copy import deepcopy
 
 app = FastAPI()
 
@@ -32,9 +35,10 @@ async def train(request: Request, username: str):
         return {"message": "Error: Couldn't load the data"}
     database_utils.save_tsv(content=tsv_str, base_path="./datasets/training/", username=username)
 
-    train_fun('keystroke_data.sqlite', username, mode=LoadMode.ONE_HOT,
-              test_train_split=0, positive_negative_ratio=1, hidden_dim=128,
-              rows_per_example=50, offset=10)
+    kwargs = deepcopy(current_setup_kwargs)
+    kwargs.pop("threshold", None)  # remove the threshold
+    train_fun('keystroke_data.sqlite', username, test_train_split=0, positive_negative_ratio=2, offset=10,
+             **kwargs)
 
     return {"message": "TSV data received successfully. Training succeeded."}
 
